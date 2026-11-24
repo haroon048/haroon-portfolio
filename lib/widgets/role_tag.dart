@@ -20,7 +20,7 @@ class _RoleTagState extends State<RoleTag>
     super.initState();
     _cycleController = AnimationController(
       vsync: this,
-      duration: const Duration(milliseconds: 2600),
+      duration: const Duration(milliseconds: 2000),
     );
     _cycleController.addStatusListener((AnimationStatus status) {
       if (status == AnimationStatus.completed) {
@@ -43,8 +43,16 @@ class _RoleTagState extends State<RoleTag>
 
   @override
   Widget build(BuildContext context) {
+    final bool isNarrow = MediaQuery.of(context).size.width < 600;
+    final double fontSize = isNarrow ? 21 : 26;
+    final TextStyle roleStyle = GoogleFonts.archivo(
+      fontSize: fontSize,
+      fontWeight: FontWeight.w800,
+      color: AppColors.ink,
+      letterSpacing: 0.5,
+    );
     return Transform.rotate(
-      angle: -0.044,
+      angle: -0.03,
       child: Stack(
         clipBehavior: Clip.none,
         children: <Widget>[
@@ -83,24 +91,37 @@ class _RoleTagState extends State<RoleTag>
                 ),
               ],
             ),
-            child: AnimatedSwitcher(
-              duration: const Duration(milliseconds: 550),
-              transitionBuilder: (Widget child, Animation<double> animation) {
-                return RotationTransition(
-                  turns: Tween<double>(begin: 0.25, end: 0).animate(animation),
-                  child: FadeTransition(opacity: animation, child: child),
-                );
-              },
-              child: Text(
-                PortfolioData.roles[_index],
-                key: ValueKey<String>(PortfolioData.roles[_index]),
-                style: GoogleFonts.archivo(
-                  fontSize: 26,
-                  fontWeight: FontWeight.w800,
-                  color: AppColors.ink,
-                  letterSpacing: 0.5,
+            child: Stack(
+              children: <Widget>[
+                Opacity(
+                  opacity: 0,
+                  child: Text(
+                    'Mobile App Developer',
+                    style: roleStyle,
+                  ),
                 ),
-              ),
+                AnimatedSwitcher(
+                  duration: const Duration(milliseconds: 350),
+                  transitionBuilder:
+                      (Widget child, Animation<double> animation) {
+                    return SlideTransition(
+                      position: Tween<Offset>(
+                        begin: const Offset(0, 0.25),
+                        end: Offset.zero,
+                      ).animate(animation),
+                      child: FadeTransition(
+                        opacity: animation,
+                        child: child,
+                      ),
+                    );
+                  },
+                  child: Text(
+                    PortfolioData.roles[_index],
+                    key: ValueKey<String>(PortfolioData.roles[_index]),
+                    style: roleStyle,
+                  ),
+                ),
+              ],
             ),
           ),
         ],

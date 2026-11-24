@@ -96,7 +96,7 @@ class _HomeViewState extends State<HomeView> {
     }
     Scrollable.ensureVisible(
       targetContext,
-      duration: const Duration(milliseconds: 700),
+      duration: const Duration(milliseconds: 450),
       curve: Curves.easeInOut,
       alignment: 0.02,
     );
@@ -134,6 +134,7 @@ class _HomeViewState extends State<HomeView> {
             controller: _scrollController,
             child: Column(
               children: <Widget>[
+                const SizedBox(height: 84),
                 const MarqueeStrip(),
                 Container(
                   key: _sectionKeys['home'],

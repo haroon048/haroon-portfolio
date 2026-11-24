@@ -25,7 +25,7 @@ class ThemeToggle extends StatelessWidget {
             AnimatedAlign(
               alignment:
                   isDark ? Alignment.centerRight : Alignment.centerLeft,
-              duration: const Duration(milliseconds: 350),
+              duration: const Duration(milliseconds: 250),
               curve: Curves.easeInOut,
               child: Container(
                 width: 74,

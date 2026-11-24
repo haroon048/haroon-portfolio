@@ -5,31 +5,8 @@ import 'package:haroon_portfolio/constants/app_colors.dart';
 import 'package:haroon_portfolio/provider/site_provider.dart';
 import 'package:provider/provider.dart';
 
-class HeroPhoto extends StatefulWidget {
+class HeroPhoto extends StatelessWidget {
   const HeroPhoto({super.key});
-
-  @override
-  State<HeroPhoto> createState() => _HeroPhotoState();
-}
-
-class _HeroPhotoState extends State<HeroPhoto>
-    with SingleTickerProviderStateMixin {
-  late final AnimationController _glowController;
-
-  @override
-  void initState() {
-    super.initState();
-    _glowController = AnimationController(
-      vsync: this,
-      duration: const Duration(seconds: 7),
-    )..repeat();
-  }
-
-  @override
-  void dispose() {
-    _glowController.dispose();
-    super.dispose();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -53,36 +30,28 @@ class _HeroPhotoState extends State<HeroPhoto>
           clipBehavior: Clip.none,
           alignment: Alignment.center,
           children: <Widget>[
-            AnimatedBuilder(
-              animation: _glowController,
-              builder: (BuildContext context, Widget? child) {
-                return Positioned(
-                  top: -30,
-                  left: -30,
-                  right: -30,
-                  bottom: -10,
-                  child: ImageFiltered(
-                    imageFilter: ImageFilter.blur(sigmaX: 28, sigmaY: 28),
-                    child: Container(
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(240),
-                        gradient: SweepGradient(
-                          colors: const <Color>[
-                            AppColors.orange,
-                            AppColors.gold,
-                            AppColors.blue,
-                            Color(0xFF2A9D8F),
-                            AppColors.orange,
-                          ],
-                          transform: GradientRotation(
-                            _glowController.value * 6.28,
-                          ),
-                        ),
-                      ),
+            Positioned(
+              top: -30,
+              left: -30,
+              right: -30,
+              bottom: -10,
+              child: ImageFiltered(
+                imageFilter: ImageFilter.blur(sigmaX: 14, sigmaY: 14),
+                child: Container(
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(240),
+                    gradient: const SweepGradient(
+                      colors: <Color>[
+                        AppColors.orange,
+                        AppColors.gold,
+                        AppColors.blue,
+                        Color(0xFF2A9D8F),
+                        AppColors.orange,
+                      ],
                     ),
                   ),
-                );
-              },
+                ),
+              ),
             ),
             Positioned(
               top: 6,
@@ -109,32 +78,32 @@ class _HeroPhotoState extends State<HeroPhoto>
                   ..rotateY(tiltY * 0.18)
                   ..rotateX(-tiltX * 0.14),
                 alignment: Alignment.center,
-              child: ClipRRect(
-                borderRadius: const BorderRadius.only(
-                  topLeft: Radius.circular(220),
-                  topRight: Radius.circular(220),
-                  bottomLeft: Radius.circular(22),
-                  bottomRight: Radius.circular(22),
-                ),
-                child: ColorFiltered(
-                  colorFilter: const ColorFilter.matrix(<double>[
-                    0.2126, 0.7152, 0.0722, 0, 0,
-                    0.2126, 0.7152, 0.0722, 0, 0,
-                    0.2126, 0.7152, 0.0722, 0, 0,
-                    0, 0, 0, 1, 0,
-                  ]),
-                  child: Image.asset(
-                    'assets/images/haroon.png',
+                child: ClipRRect(
+                  borderRadius: const BorderRadius.only(
+                    topLeft: Radius.circular(220),
+                    topRight: Radius.circular(220),
+                    bottomLeft: Radius.circular(22),
+                    bottomRight: Radius.circular(22),
+                  ),
+                  child: SizedBox(
                     width: 380,
                     height: 470,
-                    fit: BoxFit.cover,
-                    alignment: const Alignment(0, -0.35),
-                    scale: 1.0,
+                    child: OverflowBox(
+                      maxWidth: 551,
+                      maxHeight: 682,
+                      alignment: Alignment.center,
+                      child: Image.asset(
+                        'assets/images/haroon.png',
+                        width: 551,
+                        height: 682,
+                        fit: BoxFit.cover,
+                        alignment: Alignment.topCenter,
+                      ),
+                    ),
                   ),
                 ),
               ),
             ),
-          ),
             Positioned(
               left: 0,
               bottom: 18,

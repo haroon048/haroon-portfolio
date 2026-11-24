@@ -1,3 +1,4 @@
+import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:haroon_portfolio/constants/app_colors.dart';
@@ -69,29 +70,26 @@ class _AppNavBarState extends State<AppNavBar> {
       padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 8),
       decoration: BoxDecoration(
         color: isDark
-            ? const Color(0xFF0D181C).withValues(alpha: 0.72)
-            : Colors.white.withValues(alpha: 0.62),
+            ? const Color(0xFF0D181C).withValues(alpha: 0.85)
+            : Colors.white.withValues(alpha: 0.80),
         borderRadius: BorderRadius.circular(isMobile ? 20 : 999),
         border: Border.all(
           color: isDark
-              ? Colors.white.withValues(alpha: 0.10)
-              : Colors.black.withValues(alpha: 0.08),
+              ? Colors.white.withValues(alpha: 0.16)
+              : Colors.black.withValues(alpha: 0.14),
         ),
         boxShadow: <BoxShadow>[
           BoxShadow(
-            color: Colors.black.withValues(alpha: 0.12),
-            blurRadius: 24,
-            offset: const Offset(0, 8),
+            color: Colors.black.withValues(alpha: 0.16),
+            blurRadius: 28,
+            offset: const Offset(0, 10),
           ),
         ],
       ),
       child: ClipRRect(
         borderRadius: BorderRadius.circular(isMobile ? 14 : 999),
         child: BackdropFilter(
-          filter: const ColorFilter.mode(
-            Colors.transparent,
-            BlendMode.srcOver,
-          ),
+          filter: ImageFilter.blur(sigmaX: 18, sigmaY: 18),
           child: Stack(
             key: _rowKey,
             children: <Widget>[
@@ -100,7 +98,7 @@ class _AppNavBarState extends State<AppNavBar> {
                 top: _pillRect?.top ?? 0,
                 width: _pillRect?.width ?? 0,
                 height: _pillRect?.height ?? 0,
-                duration: const Duration(milliseconds: 450),
+                duration: const Duration(milliseconds: 280),
                 curve: Curves.easeInOut,
                 child: Container(
                   decoration: BoxDecoration(
@@ -117,12 +115,12 @@ class _AppNavBarState extends State<AppNavBar> {
                 runSpacing: 6,
                 children: <Widget>[
                   Container(
-                    width: 42,
-                    height: 42,
-                    margin: const EdgeInsets.only(right: 6),
-                    decoration: const BoxDecoration(
+                    width: 40,
+                    height: 40,
+                    margin: const EdgeInsets.only(right: 8),
+                    decoration: BoxDecoration(
                       shape: BoxShape.circle,
-                      gradient: LinearGradient(
+                      gradient: const LinearGradient(
                         begin: Alignment.topLeft,
                         end: Alignment.bottomRight,
                         colors: <Color>[
@@ -131,6 +129,17 @@ class _AppNavBarState extends State<AppNavBar> {
                           AppColors.orange,
                         ],
                       ),
+                      border: Border.all(
+                        color: AppColors.gold.withValues(alpha: 0.55),
+                        width: 1.5,
+                      ),
+                      boxShadow: <BoxShadow>[
+                        BoxShadow(
+                          color: Colors.black.withValues(alpha: 0.20),
+                          blurRadius: 8,
+                          offset: const Offset(0, 3),
+                        ),
+                      ],
                     ),
                     child: Center(
                       child: Text(
@@ -156,21 +165,42 @@ class _AppNavBarState extends State<AppNavBar> {
                   Container(
                     margin: const EdgeInsets.only(left: 8),
                     padding: const EdgeInsets.symmetric(
-                      horizontal: 12,
+                      horizontal: 10,
                       vertical: 8,
                     ),
                     decoration: BoxDecoration(
                       color: pillBg,
                       borderRadius: BorderRadius.circular(999),
-                    ),
-                    child: Text(
-                      LiveDate.today(),
-                      style: GoogleFonts.poppins(
-                        fontSize: 11,
-                        fontWeight: FontWeight.w700,
-                        letterSpacing: 1,
-                        color: isDark ? AppColors.inkLight : AppColors.ink,
+                      border: Border.all(
+                        color: isDark
+                            ? Colors.white.withValues(alpha: 0.10)
+                            : Colors.black.withValues(alpha: 0.08),
                       ),
+                    ),
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: <Widget>[
+                        Container(
+                          width: 7,
+                          height: 7,
+                          decoration: const BoxDecoration(
+                            color: Color(0xFF2ECC71),
+                            shape: BoxShape.circle,
+                          ),
+                        ),
+                        const SizedBox(width: 7),
+                        Text(
+                          LiveDate.today(),
+                          style: GoogleFonts.poppins(
+                            fontSize: 11,
+                            fontWeight: FontWeight.w700,
+                            letterSpacing: 1,
+                            color: isDark
+                                ? AppColors.inkLight
+                                : AppColors.ink,
+                          ),
+                        ),
+                      ],
                     ),
                   ),
                 ],
@@ -199,19 +229,22 @@ class _NavLink extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: onTap,
-      child: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
-        decoration: const BoxDecoration(color: Colors.transparent),
-        child: Text(
-          label,
-          style: GoogleFonts.poppins(
-            fontSize: 13,
-            fontWeight: FontWeight.w600,
-            color: isActive
-                ? Colors.white
-                : (isDark ? AppColors.inkSoftDark : AppColors.inkSoft),
+    return MouseRegion(
+      cursor: SystemMouseCursors.click,
+      child: GestureDetector(
+        onTap: onTap,
+        child: Container(
+          padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 9),
+          decoration: const BoxDecoration(color: Colors.transparent),
+          child: Text(
+            label,
+            style: GoogleFonts.poppins(
+              fontSize: 13,
+              fontWeight: FontWeight.w600,
+              color: isActive
+                  ? Colors.white
+                  : (isDark ? AppColors.inkSoftDark : AppColors.inkSoft),
+            ),
           ),
         ),
       ),

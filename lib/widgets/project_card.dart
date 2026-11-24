@@ -24,19 +24,24 @@ class ProjectCard extends StatefulWidget {
 
 class _ProjectCardState extends State<ProjectCard> {
   bool _hovering = false;
+  int _galleryIndex = 0;
 
   @override
   Widget build(BuildContext context) {
     final bool isWide = MediaQuery.of(context).size.width > 900;
+    final List<String> gallery = widget.project.galleryAssets;
+    final String mainImage = gallery.isEmpty
+        ? widget.project.imageAsset
+        : gallery[_galleryIndex.clamp(0, gallery.length - 1)];
     final Widget phone = MouseRegion(
       onEnter: (_) => setState(() => _hovering = true),
       onExit: (_) => setState(() => _hovering = false),
       child: AnimatedSlide(
         offset: Offset(0, _hovering ? -0.02 : 0),
-        duration: const Duration(milliseconds: 300),
+        duration: const Duration(milliseconds: 200),
         child: AnimatedRotation(
           turns: _hovering ? -0.003 : 0,
-          duration: const Duration(milliseconds: 300),
+          duration: const Duration(milliseconds: 200),
           child: Stack(
           clipBehavior: Clip.none,
           alignment: Alignment.center,
@@ -47,7 +52,7 @@ class _ProjectCardState extends State<ProjectCard> {
               right: -18,
               bottom: 10,
               child: ImageFiltered(
-                imageFilter: ImageFilter.blur(sigmaX: 22, sigmaY: 22),
+                imageFilter: ImageFilter.blur(sigmaX: 14, sigmaY: 14),
                 child: Container(
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(40),
@@ -89,12 +94,16 @@ class _ProjectCardState extends State<ProjectCard> {
                       color: widget.project.title == 'TomatoDoc AI'
                           ? AppColors.tomatoBg
                           : Colors.white,
-                      child: Image.asset(
-                        widget.project.imageAsset,
-                        width: double.infinity,
-                        height: double.infinity,
-                        fit: widget.project.imageFit,
-                        alignment: Alignment.topCenter,
+                      child: AnimatedSwitcher(
+                        duration: const Duration(milliseconds: 250),
+                        child: Image.asset(
+                          mainImage,
+                          key: ValueKey<String>(mainImage),
+                          width: double.infinity,
+                          height: double.infinity,
+                          fit: widget.project.imageFit,
+                          alignment: Alignment.topCenter,
+                        ),
                       ),
                     ),
                   ),
@@ -120,6 +129,48 @@ class _ProjectCardState extends State<ProjectCard> {
         ),
       ),
     ),
+    );
+    final Widget phoneWithGallery = Column(
+      mainAxisSize: MainAxisSize.min,
+      children: <Widget>[
+        phone,
+        if (gallery.isNotEmpty) ...<Widget>[
+          const SizedBox(height: 14),
+          Row(
+            mainAxisSize: MainAxisSize.min,
+            children: List<Widget>.generate(gallery.length, (int i) {
+              final bool selected = i == _galleryIndex;
+              return GestureDetector(
+                onTap: () => setState(() => _galleryIndex = i),
+                child: Container(
+                  width: 54,
+                  height: 96,
+                  margin: EdgeInsets.only(
+                    right: i == gallery.length - 1 ? 0 : 10,
+                  ),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(10),
+                    border: Border.all(
+                      color: selected
+                          ? AppColors.orange
+                          : Colors.white.withValues(alpha: 0.18),
+                      width: selected ? 2 : 1,
+                    ),
+                  ),
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(9),
+                    child: Image.asset(
+                      gallery[i],
+                      fit: BoxFit.cover,
+                      alignment: Alignment.topCenter,
+                    ),
+                  ),
+                ),
+              );
+            }),
+          ),
+        ],
+      ],
     );
     final Widget text = Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -240,20 +291,20 @@ class _ProjectCardState extends State<ProjectCard> {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: <Widget>[
                   if (!widget.flip) ...<Widget>[
-                    phone,
+                    phoneWithGallery,
                     const SizedBox(width: 48),
                     Expanded(child: text),
                   ] else ...<Widget>[
                     Expanded(child: text),
                     const SizedBox(width: 48),
-                    phone,
+                    phoneWithGallery,
                   ],
                 ],
               )
             : Column(
                 mainAxisSize: MainAxisSize.min,
                 children: <Widget>[
-                  phone,
+                  phoneWithGallery,
                   const SizedBox(height: 32),
                   text,
                 ],

@@ -66,7 +66,7 @@ class StorySection extends StatelessWidget {
                       ),
                       TweenAnimationBuilder<double>(
                         tween: Tween<double>(begin: 0, end: 1),
-                        duration: const Duration(milliseconds: 1600),
+                        duration: const Duration(milliseconds: 1000),
                         curve: Curves.easeOut,
                         builder: (BuildContext context, double value,
                             Widget? child) {

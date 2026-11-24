@@ -98,7 +98,7 @@ class _DoorWidgetState extends State<DoorWidget> {
                 ),
               ),
               AnimatedContainer(
-                duration: const Duration(milliseconds: 1050),
+                duration: const Duration(milliseconds: 650),
                 curve: Curves.easeInOut,
                 transform: Matrix4.identity()
                   ..setEntry(3, 2, 0.002)

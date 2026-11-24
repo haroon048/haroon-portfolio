@@ -66,7 +66,7 @@ class DoorPanel extends StatelessWidget {
       }).toList(),
     );
     return AnimatedSwitcher(
-      duration: const Duration(milliseconds: 600),
+      duration: const Duration(milliseconds: 400),
       child: Container(
         key: ValueKey<String>(service.key),
         width: double.infinity,

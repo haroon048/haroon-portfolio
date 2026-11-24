@@ -15,7 +15,7 @@ class SkillBar extends StatelessWidget {
     return Reveal(
       delay: delay,
       child: Container(
-        padding: const EdgeInsets.all(20),
+        padding: const EdgeInsets.all(16),
         decoration: BoxDecoration(
           color: Colors.white.withValues(alpha: 0.05),
           borderRadius: BorderRadius.circular(18),
@@ -63,7 +63,7 @@ class SkillBar extends StatelessWidget {
                 color: Colors.white.withValues(alpha: 0.10),
                 child: TweenAnimationBuilder<double>(
                   tween: Tween<double>(begin: 0, end: skill.levelValue),
-                  duration: const Duration(milliseconds: 1200),
+                  duration: const Duration(milliseconds: 800),
                   curve: Curves.easeOut,
                   builder: (BuildContext context, double value, Widget? child) {
                     return FractionallySizedBox(

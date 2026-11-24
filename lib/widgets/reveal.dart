@@ -19,7 +19,7 @@ class _RevealState extends State<Reveal>
     super.initState();
     _controller = AnimationController(
       vsync: this,
-      duration: const Duration(milliseconds: 700),
+      duration: const Duration(milliseconds: 450),
     );
     Future<void>.delayed(widget.delay, () {
       if (mounted) {

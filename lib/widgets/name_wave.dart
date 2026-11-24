@@ -23,15 +23,15 @@ class _NameWaveState extends State<NameWave> with TickerProviderStateMixin {
     super.initState();
     _waveController = AnimationController(
       vsync: this,
-      duration: const Duration(milliseconds: 2800),
+      duration: const Duration(milliseconds: 1800),
     )..repeat();
     _shineController = AnimationController(
       vsync: this,
-      duration: const Duration(milliseconds: 3400),
+      duration: const Duration(milliseconds: 2200),
     )..repeat();
     _enterController = AnimationController(
       vsync: this,
-      duration: const Duration(milliseconds: 1200),
+      duration: const Duration(milliseconds: 700),
     )..forward();
   }
 

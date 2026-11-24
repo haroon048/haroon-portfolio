@@ -223,6 +223,7 @@ class _ContactFormState extends State<ContactForm> {
           const SizedBox(height: 16),
           DropdownButtonFormField<String>(
             initialValue: _projectType,
+            isExpanded: true,
             decoration: _decoration('Project type'),
             dropdownColor: isDark ? AppColors.paperDark2 : Colors.white,
             style: inputStyle,

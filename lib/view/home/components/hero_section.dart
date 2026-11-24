@@ -32,13 +32,15 @@ class HeroSection extends StatelessWidget {
           children: <Widget>[
             Container(width: 38, height: 3, color: AppColors.orange),
             const SizedBox(width: 12),
-            Text(
-              AppStrings.eyebrow.toUpperCase(),
-              style: GoogleFonts.poppins(
-                fontSize: 13,
-                fontWeight: FontWeight.w800,
-                letterSpacing: 3,
-                color: subColor,
+            Flexible(
+              child: Text(
+                AppStrings.eyebrow.toUpperCase(),
+                style: GoogleFonts.poppins(
+                  fontSize: 13,
+                  fontWeight: FontWeight.w800,
+                  letterSpacing: 3,
+                  color: subColor,
+                ),
               ),
             ),
           ],
@@ -55,8 +57,10 @@ class HeroSection extends StatelessWidget {
         ),
         NameWave(text: AppStrings.name, isDark: isDark),
         const SizedBox(height: 20),
-        Row(
-          crossAxisAlignment: CrossAxisAlignment.center,
+        Wrap(
+          spacing: 18,
+          runSpacing: 12,
+          crossAxisAlignment: WrapCrossAlignment.center,
           children: <Widget>[
             Text(
               'I am a',
@@ -66,7 +70,6 @@ class HeroSection extends StatelessWidget {
                 color: textColor,
               ),
             ),
-            const SizedBox(width: 18),
             const RoleTag(),
           ],
         ),

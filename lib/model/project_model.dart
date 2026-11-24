@@ -10,6 +10,7 @@ class ProjectModel {
     required this.tags,
     required this.imageAsset,
     required this.imageFit,
+    this.galleryAssets = const <String>[],
   });
 
   final String initial;
@@ -20,4 +21,5 @@ class ProjectModel {
   final List<String> tags;
   final String imageAsset;
   final BoxFit imageFit;
+  final List<String> galleryAssets;
 }

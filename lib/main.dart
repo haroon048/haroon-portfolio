@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:haroon_portfolio/constants/app_colors.dart';
@@ -9,7 +10,7 @@ import 'package:provider/provider.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await FirebaseSetup.initialize();
+  unawaited(FirebaseSetup.initialize());
   runApp(const HaroonPortfolioApp());
 }
 

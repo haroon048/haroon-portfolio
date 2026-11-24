@@ -3,6 +3,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:haroon_portfolio/constants/app_colors.dart';
 import 'package:haroon_portfolio/constants/app_strings.dart';
 import 'package:haroon_portfolio/data/portfolio_data.dart';
+import 'package:haroon_portfolio/model/skill_model.dart';
 import 'package:haroon_portfolio/widgets/reveal.dart';
 import 'package:haroon_portfolio/widgets/section_heading.dart';
 import 'package:haroon_portfolio/widgets/skill_bar.dart';
@@ -86,6 +87,38 @@ class AboutSection extends StatelessWidget {
         ),
       ),
     );
+    final int columns =
+        MediaQuery.of(context).size.width > 560 ? 2 : 1;
+    final List<Widget> skillRows = <Widget>[];
+    for (int i = 0; i < PortfolioData.skills.length; i += columns) {
+      final List<SkillModel> rowSkills =
+          PortfolioData.skills.sublist(
+        i,
+        (i + columns).clamp(0, PortfolioData.skills.length),
+      );
+      skillRows.add(
+        Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            for (int j = 0; j < rowSkills.length; j++) ...<Widget>[
+              if (j > 0) const SizedBox(width: 14),
+              Expanded(
+                child: SkillBar(
+                  skill: rowSkills[j],
+                  delay: Duration(
+                    milliseconds: (i + j) * 80,
+                  ),
+                ),
+              ),
+            ],
+            if (rowSkills.length < columns) const Expanded(child: SizedBox()),
+          ],
+        ),
+      );
+      if (i + columns < PortfolioData.skills.length) {
+        skillRows.add(const SizedBox(height: 14));
+      }
+    }
     final Widget skillsCard = Reveal(
       delay: const Duration(milliseconds: 120),
       child: Container(
@@ -107,24 +140,7 @@ class AboutSection extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 20),
-            GridView.builder(
-              shrinkWrap: true,
-              physics: const NeverScrollableScrollPhysics(),
-              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount:
-                    MediaQuery.of(context).size.width > 560 ? 2 : 1,
-                crossAxisSpacing: 14,
-                mainAxisSpacing: 14,
-                childAspectRatio: 2.1,
-              ),
-              itemCount: PortfolioData.skills.length,
-              itemBuilder: (BuildContext context, int i) {
-                return SkillBar(
-                  skill: PortfolioData.skills[i],
-                  delay: Duration(milliseconds: i * 80),
-                );
-              },
-            ),
+            ...skillRows,
           ],
         ),
       ),

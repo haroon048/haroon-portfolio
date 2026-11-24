@@ -208,8 +208,13 @@ class PortfolioData {
       description:
           'AI tomato-leaf disease detection — MobileNetV2 trained on 18,159 images across 10 classes, 93.4% test accuracy, running fully offline with TensorFlow Lite.',
       tags: <String>['Flutter', 'TFLite · MobileNetV2', '93.4% Accuracy'],
-      imageAsset: 'assets/images/tomatodoc_cover.jpg',
-      imageFit: BoxFit.contain,
+      imageAsset: 'assets/images/tomatodoc_home.jpg',
+      imageFit: BoxFit.cover,
+      galleryAssets: <String>[
+        'assets/images/tomatodoc_home.jpg',
+        'assets/images/tomatodoc_guide.jpg',
+        'assets/images/tomatodoc_scan.jpg',
+      ],
     ),
     ProjectModel(
       initial: 'F',

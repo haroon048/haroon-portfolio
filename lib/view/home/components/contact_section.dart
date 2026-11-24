@@ -218,7 +218,7 @@ class ContactSection extends StatelessWidget {
                         MediaQuery.of(context).size.width > 700 ? 4 : 2,
                     crossAxisSpacing: 16,
                     mainAxisSpacing: 16,
-                    mainAxisExtent: 120,
+                    mainAxisExtent: 136,
                   ),
                   itemCount: links.length,
                   itemBuilder: (BuildContext context, int i) {
@@ -255,6 +255,8 @@ class ContactSection extends StatelessWidget {
                             const SizedBox(height: 6),
                             Text(
                               link['value']!,
+                              maxLines: 2,
+                              overflow: TextOverflow.ellipsis,
                               style: GoogleFonts.poppins(
                                 fontSize: 13,
                                 fontWeight: FontWeight.w600,
